@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none; /* keep custom cursor */
+}
+
+:root {
+    --lavender-bg-light: #f7f5ff;
+    --lavender-bg: #e4ddff;
+    --lavender-main: #c4b5fd;
+    --lavender-strong: #8b5cf6;
+    --lavender-deep: #6d28d9;
+    --text-main: #1f2933;
+    --text-soft: #4b5563;
+    --white-soft: #fdfcff;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at top left,
+        var(--lavender-bg-light),
+        var(--lavender-bg) 45%,
+        #ffffff 100%);
+    font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+    overflow: hidden;
+    position: relative;
+    padding: 1.5rem;
+}
+
+/* custom lavender cursor */
+.cursor {
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle at 30% 30%, #ffffff, var(--lavender-deep));
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;        /* important: doesn’t block button */
+    mix-blend-mode: screen;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out;
+    z-index: 9999;
+}
+
+/* central card */
+.container {
+    text-align: center;
+    z-index: 1;
+    max-width: 900px;
+    width: 100%;
+    padding: 3rem 2.5rem 3.5rem;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.16);
+}
+
+/* main heading (if you add it) */
+h1 {
+    font-size: 2.5rem;
+    color: var(--lavender-deep);
+    text-shadow: 0 0 14px rgba(139, 92, 246, 0.26);
+    margin-bottom: 0.75rem;
+}
+
+/* name highlight (if used) */
+.name-highlight {
+    background: linear-gradient(90deg, var(--lavender-strong), #6366f1);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* subtitle line */
+.subtitle {
+    font-size: 1rem;
+    color: var(--text-soft);
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+}
+
+/* animated text line */
+.greeting {
+    font-size: 1.6rem;
+    color: var(--lavender-deep);
+    margin-bottom: 2.8rem;
+    min-height: 2em;
+    line-height: 1.4;
+}
+
+/* CTA button – lavender gradient */
+.cta-button {
+    padding: 1rem 2.8rem;
+    font-size: 1.15rem;
+    background: linear-gradient(120deg, var(--lavender-strong), #6366f1);
+    border: none;
+    border-radius: 999px;
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 12px 26px rgba(129, 140, 248, 0.55);
+    transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 16px 34px rgba(129, 140, 248, 0.7);
+    filter: brightness(1.05);
+}
+
+.cta-button:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 10px 20px rgba(129, 140, 248, 0.5);
+}
+
+.floating {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 2.4rem 1.6rem 2.8rem;
+    }
+
+    h1 {
+        font-size: 2.1rem;
+    }
+
+    .greeting {
+        font-size: 1.3rem;
+        margin-bottom: 2.2rem;
+    }
+
+    .cta-button {
+        width: 100%;
+        justify-content: center;
+        font-size: 1.05rem;
+    }
+}

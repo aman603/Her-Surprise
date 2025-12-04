@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Beautiful Memories ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;400;500;600&display=swap');
+
+        :root {
+            --lavender-bg-light: #f7f5ff;
+            --lavender-bg: #e6e6fa;
+            --lavender-main: #c4b5fd;
+            --lavender-strong: #8b5cf6;
+            --lavender-deep: #6d28d9;
+            --text-main: #1f2933;
+            --text-soft: #4b5563;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg,
+                    var(--lavender-bg-light) 0%,
+                    var(--lavender-bg) 35%,
+                    #ffffff 65%,
+                    var(--lavender-bg-light) 100%);
+            background-size: 300% 300%;
+            animation: gradientFlow 18s ease infinite;
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            color: var(--text-soft);
+        }
+
+        @keyframes gradientFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Sparkle layer */
+        .magic-sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .magic-sparkles::before,
+        .magic-sparkles::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.9) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: sparkleLayer 10s linear infinite;
+            opacity: 0.45;
+        }
+
+        .magic-sparkles::after {
+            animation-delay: -5s;
+            transform: rotate(30deg);
+        }
+
+        @keyframes sparkleLayer {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-60px);
+            }
+        }
+
+        /* Floating hearts (lavender toned) */
+        .floating-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 1.6rem;
+            color: rgba(139, 92, 246, 0.45);
+            animation: floatHeart var(--float-duration, 7s) ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translate(0, 100vh) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(var(--translate-x, 0), -100vh) rotate(360deg);
+            }
+        }
+
+        /* Welcome Section */
+        .welcome {
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .welcome h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.8rem;
+            color: var(--lavender-deep);
+            text-shadow: 2px 2px 6px rgba(109, 40, 217, 0.25);
+            animation: fadeInScale 2s ease;
+        }
+
+        .welcome p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 1.5rem auto 0;
+            line-height: 1.6;
+            animation: fadeIn 2s ease 0.5s both;
+        }
+
+        /* Memory Cards */
+        .memory-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .memory-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 1.6rem;
+            box-shadow: 0 12px 28px rgba(148, 163, 184, 0.35);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 18px 36px rgba(129, 140, 248, 0.45);
+        }
+
+        .memory-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .memory-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .memory-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            transition: transform 0.5s ease;
+        }
+
+        .memory-card:hover .memory-img {
+            transform: scale(1.05);
+        }
+
+        .memory-date {
+            font-family: 'Dancing Script', cursive;
+            color: var(--lavender-strong);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .memory-caption {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-soft);
+        }
+
+        /* Final Message Section */
+        .final-message {
+            text-align: center;
+            padding: 4rem 2rem 4.5rem;
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            margin-top: 3rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .final-message h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: var(--lavender-deep);
+            margin-bottom: 2rem;
+            animation: heartbeat 2.2s infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        .final-message p {
+            font-size: 1.15rem;
+            max-width: 800px;
+            margin: 0 auto 1.8rem;
+            line-height: 1.8;
+        }
+
+        .goodbye-btn {
+            display: inline-block;
+            padding: 1rem 2.6rem;
+            font-size: 1.15rem;
+            background: linear-gradient(45deg, var(--lavender-strong), #6366f1);
+            color: white;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 26px rgba(129, 140, 248, 0.6);
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .goodbye-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 32px rgba(129, 140, 248, 0.8);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--lavender-strong), #6366f1);
+            border-radius: 6px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome h1 {
+                font-size: 3rem;
+            }
+
+            .memory-container {
+                grid-template-columns: 1fr;
+            }
+
+            .final-message h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="magic-sparkles"></div>
+
+    <div class="floating-hearts">
+        <div class="heart" style="--float-duration: 7s; --delay: 0s; --translate-x: 20px;">💜</div>
+        <div class="heart" style="--float-duration: 9s; --delay: 1s; --translate-x: -30px;">🤍</div>
+        <div class="heart" style="--float-duration: 8s; --delay: 2s; --translate-x: 40px;">💜</div>
+        <div class="heart" style="--float-duration: 10s; --delay: 3s; --translate-x: -20px;">🤍</div>
+        <div class="heart" style="--float-duration: 6s; --delay: 4s; --translate-x: 30px;">💜</div>
+    </div>
+
+    <!-- Welcome -->
+    <section class="welcome">
+        <h1>Our Little Story, Mera Gudda ✨</h1>
+        <p>
+            These are just a few snapshots of us — the soft smiles, the random moments, and all the tiny pieces of time
+            that quietly became my favourite memories with you.
+        </p>
+    </section>
+
+    <!-- Memories (4 cards) -->
+   <div class="memory-container">
+    <!-- Memory 1 -->
+    <div class="memory-card">
+        <img src="./d1_new.jpeg" alt="Memory 1" class="memory-img">
+        <div class="memory-date">That Smile I Can’t Forget</div>
+        <div class="memory-caption">
+            Your smile has this old-school kind of magic — it doesn’t just light up a room, it softens my whole day. 💜
+        </div>
+    </div>
+
+    <!-- Memory 2 -->
+    <div class="memory-card">
+        <img src="./d2_new.jpeg" alt="Memory 2" class="memory-img">
+        <div class="memory-date">You & Me In One Frame</div>
+        <div class="memory-caption">
+            A moment that felt light, warm, and perfectly ours — something I never wanted to rush through. 🤍
+        </div>
+    </div>
+
+    <!-- Memory 3 -->
+    <div class="memory-card">
+        <img src="./d3_new.jpeg" alt="Memory 3" class="memory-img">
+        <div class="memory-date">My Favourite Version Of You</div>
+        <div class="memory-caption">
+            You look most beautiful when you're just being yourself — lost in your own world. ✨
+        </div>
+    </div>
+
+    <!-- Memory 4 -->
+    <div class="memory-card">
+        <img src="./d4_new.jpeg" alt="Memory 4" class="memory-img">
+        <div class="memory-date">One More Reason To Stay</div>
+        <div class="memory-caption">
+            Even the simplest moments with you turn into stories my heart replays again and again. 🌙
+        </div>
+    </div>
+</div>
+
+
+    <!-- Final message -->
+    <section class="final-message">
+        <h2>Thank You For Being Mine, My Queen 💜</h2>
+        <p>
+            Every laugh, every late-night chat, and every random plan with you has turned into a memory I never want to
+            lose. I’m genuinely grateful that our paths crossed and that I get to call you my person.
+        </p>
+        <p>
+            You deserve soft days, loud laughs, peaceful nights, and a life full of love — and I’ll always be on your
+            side, cheering for you in every chapter that comes next.
+        </p>
+        <a href="index.html" class="goodbye-btn">Start the Surprise Again ✨</a>
+    </section>
+</body>
+
+</html>

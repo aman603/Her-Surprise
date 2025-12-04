@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Comic+Neue:wght@700&family=Quicksand:wght@500&display=swap');
+
+:root {
+    --lavender-bg-light: #f7f5ff;
+    --lavender-bg: #e4ddff;
+    --lavender-main: #c4b5fd;
+    --lavender-strong: #8b5cf6;
+    --lavender-deep: #6d28d9;
+    --text-main: #1f2933;
+    --text-soft: #4b5563;
+    --card-bg: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(-45deg, var(--lavender-bg-light), var(--lavender-bg), #ffffff);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    font-family: 'Quicksand', sans-serif;
+    overflow-x: hidden;
+    padding: 2rem;
+}
+
+/* custom lavender cursor */
+.custom-cursor {
+    width: 30px;
+    height: 30px;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: screen;
+    transition: transform 0.1s;
+}
+
+.custom-cursor svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 6px rgba(139, 92, 246, 0.6));
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 3rem;
+    color: var(--lavender-deep);
+    text-shadow: 2px 2px 6px rgba(139, 92, 246, 0.28);
+    margin-bottom: 2rem;
+    animation: bounce 1s ease infinite;
+}
+
+/* individual reason card */
+.reason-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 1.5rem;
+    box-shadow: 0 5px 18px rgba(148, 163, 184, 0.25);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.reason-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(129, 140, 248, 0.4);
+}
+
+.reason-text {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+    color: var(--text-soft);
+}
+
+/* GIF overlay inside card */
+.gif-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+}
+
+.reason-card:hover .gif-overlay {
+    opacity: 1;
+}
+
+/* shuffle / next button */
+.shuffle-button {
+    background: linear-gradient(45deg, var(--lavender-strong), #6366f1);
+    border: none;
+    border-radius: 50px;
+    padding: 1rem 2.4rem;
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin: 2rem 0;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Comic Neue', cursive;
+    box-shadow: 0 6px 18px rgba(129, 140, 248, 0.45);
+}
+
+.shuffle-button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 28px rgba(129, 140, 248, 0.6);
+}
+
+/* when you put it in “story mode” via JS */
+.shuffle-button.story-mode {
+    background: linear-gradient(45deg, #7c3aed, #ec4899);
+    transform: scale(1.1);
+}
+
+.shuffle-button.story-mode:hover {
+    transform: scale(1.18);
+}
+
+/* counter under button */
+.reason-counter {
+    font-size: 0.9rem;
+    color: var(--lavender-deep);
+    margin-top: 1rem;
+    opacity: 0.75;
+}
+
+.floating {
+    position: fixed;
+    pointer-events: none;
+    animation: float 3s ease-in-out infinite;
+}
+
+/* ending block */
+.ending-section {
+    margin-top: 4rem;
+    padding: 2rem;
+    text-align: center;
+}
+
+.ending-text {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 2rem;
+    color: var(--lavender-deep);
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.teddy-hug {
+    width: 200px;
+    margin: 0 auto;
+    transform: scale(0);
+}
+
+/* animations */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* responsive */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    .reason-card {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    .reason-text {
+        font-size: 1rem;
+    }
+}
