@@ -24,37 +24,41 @@ function typeGreeting() {
     }
 }
 
-// ---------------- Animations + navigation + music ----------------
+// ---------------- Animations + iframe navigation + music ----------------
 window.addEventListener('DOMContentLoaded', () => {
-    // Start typing
-    typeGreeting();
-
     const button = document.querySelector('.cta-button');
     const bgMusic = document.getElementById('bg-music');
+    const container = document.getElementById('hero');
+    const frameWrapper = document.getElementById('frame-wrapper');
+    const contentFrame = document.getElementById('content-frame');
 
-    // Entry animation
-    gsap.from('.container', {
-        opacity: 0,
-        y: 40,
-        duration: 1,
-        ease: 'power2.out'
-    });
+    // Start typing on homepage
+    typeGreeting();
 
-    // Subtle breathing animation on button
-    gsap.fromTo(
-        '.cta-button',
-        { scale: 0.96 },
-        {
-            scale: 1,
-            duration: 0.8,
-            ease: 'power1.inOut',
-            repeat: -1,
-            yoyo: true
-        }
-    );
+    // Entry animation for hero
+    if (container && window.gsap) {
+        gsap.from(container, {
+            opacity: 0,
+            y: 40,
+            duration: 1,
+            ease: 'power2.out'
+        });
+    }
 
-    // Hover micro-interaction
-    if (button) {
+    // Button breathing + hover
+    if (button && window.gsap) {
+        gsap.fromTo(
+            button,
+            { scale: 0.96 },
+            {
+                scale: 1,
+                duration: 0.8,
+                ease: 'power1.inOut',
+                repeat: -1,
+                yoyo: true
+            }
+        );
+
         button.addEventListener('mouseenter', () => {
             gsap.to(button, { scale: 1.05, duration: 0.2 });
         });
@@ -62,24 +66,36 @@ window.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('mouseleave', () => {
             gsap.to(button, { scale: 1.0, duration: 0.2 });
         });
+    }
 
-        // On click: start music (user gesture) + transition to reasons page
+    // On click: start music + fade hero + show iframe with cause.html
+    if (button) {
         button.addEventListener('click', () => {
             if (bgMusic) {
-                // Try to start background music after user interaction
-                bgMusic.play().catch(() => {
-                    // If browser blocks autoplay, you can ignore the error
-                    // or later add a small "Tap to enable sound" message.
-                });
+                bgMusic.currentTime = 0;
+                bgMusic.volume = 0.6;
+                bgMusic.play().catch(() => {});
             }
 
-            gsap.to('body', {
-                opacity: 0,
-                duration: 1,
-                onComplete: () => {
-                    window.location.href = 'cause.html';
-                }
-            });
+            if (window.gsap && container && frameWrapper && contentFrame) {
+                gsap.to(container, {
+                    opacity: 0,
+                    y: -20,
+                    duration: 0.6,
+                    ease: 'power2.inOut',
+                    onComplete: () => {
+                        container.style.display = 'none';
+                        // activate iframe view
+                        frameWrapper.classList.add('active');
+                        // load the reasons page inside iframe
+                        contentFrame.src = 'cause.html';
+                    }
+                });
+            } else if (frameWrapper && contentFrame) {
+                container.style.display = 'none';
+                frameWrapper.classList.add('active');
+                contentFrame.src = 'cause.html';
+            }
         });
     }
 });

@@ -302,6 +302,36 @@
                 opacity: 1;
             }
         }
+                /* Heart fireworks overlay */
+        .firework-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .firework-heart {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0;
+            animation: heartBurst 1.4s ease-out forwards;
+        }
+
+        @keyframes heartBurst {
+            0% {
+                transform: translate(-50%, -50%) scale(0.4);
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx, -50%), var(--ty, -50%)) scale(1.2);
+                opacity: 0;
+            }
+        }
+
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
@@ -315,6 +345,48 @@
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(45deg, var(--lavender-strong), #6366f1);
             border-radius: 6px;
+        }
+        /* Soft floating lavender particles */
+        .floating-lights {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .floating-lights span {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: radial-gradient(circle, #ffffff, rgba(167, 139, 250, 0.4));
+            opacity: 0.85;
+            filter: blur(0.4px);
+            animation: floatLight linear infinite;
+        }
+
+        @keyframes floatLight {
+            0% {
+                transform: translateY(0) translateX(0) scale(0.7);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.9;
+            }
+            85% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-120vh) translateX(40px) scale(1.05);
+                opacity: 0;
+            }
+        }
+
+        .floating-hearts {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
         }
 
         /* Responsive */
@@ -335,6 +407,8 @@
 </head>
 
 <body>
+    <audio id="bg-music" src="bg-music.mp3" preload="auto" loop></audio>
+    <div class="floating-lights" aria-hidden="true"></div>
     <div class="magic-sparkles"></div>
 
     <div class="floating-hearts">
@@ -354,7 +428,6 @@
         </p>
     </section>
 
-    <!-- Memories (4 cards) -->
    <div class="memory-container">
     <!-- Memory 1 -->
     <div class="memory-card">
@@ -391,7 +464,26 @@
             Even the simplest moments with you turn into stories my heart replays again and again. 🌙
         </div>
     </div>
+
+    <!-- Memory 5 -->
+    <div class="memory-card">
+        <img src="./d5_new.jpeg" alt="Memory 5" class="memory-img">
+        <div class="memory-date">The Kind Of Peace You Are</div>
+        <div class="memory-caption">
+            There’s a calm I only feel when I’m with you — like the world slows down for a while just to let us breathe. 🕊️
+        </div>
+    </div>
+
+    <!-- Memory 6 -->
+    <div class="memory-card">
+        <img src="./d6_new.jpeg" alt="Memory 6" class="memory-img">
+        <div class="memory-date">My Favourite What-If Turned Real</div>
+        <div class="memory-caption">
+            I used to imagine a love like this, and then suddenly, there you were — turning all my what-ifs into something real. 💫
+        </div>
+    </div>
 </div>
+
 
 
     <!-- Final message -->
@@ -407,6 +499,61 @@
         </p>
         <a href="index.html" class="goodbye-btn">Start the Surprise Again ✨</a>
     </section>
+<script src="script.js"></script>
+<script>
+    (function initHeartFireworks() {
+        const finalSection = document.querySelector('.final-message');
+        if (!finalSection || !('IntersectionObserver' in window)) return;
+
+        const layer = document.createElement('div');
+        layer.className = 'firework-layer';
+        document.body.appendChild(layer);
+
+        const hearts = ['💜', '🤍', '💖'];
+
+        function spawnHeartBurst() {
+            const rect = finalSection.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2 + window.scrollY;
+
+            for (let i = 0; i < 8; i++) {
+                const h = document.createElement('div');
+                h.className = 'firework-heart';
+                h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+
+                const angle = (Math.PI * 2 * i) / 8;
+                const radius = 120 + Math.random() * 40;
+
+                const tx = Math.cos(angle) * radius;
+                const ty = Math.sin(angle) * radius;
+
+                h.style.left = cx + 'px';
+                h.style.top = cy + 'px';
+                h.style.setProperty('--tx', tx + 'px');
+                h.style.setProperty('--ty', ty + 'px');
+
+                layer.appendChild(h);
+
+                setTimeout(() => {
+                    layer.removeChild(h);
+                }, 1500);
+            }
+        }
+
+        const onceObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setTimeout(spawnHeartBurst, 500);
+                    setTimeout(spawnHeartBurst, 1400);
+                    onceObserver.disconnect();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        onceObserver.observe(finalSection);
+    })();
+</script>
+
 </body>
 
 </html>
