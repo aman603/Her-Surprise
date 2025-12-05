@@ -1,5 +1,5 @@
- // Reasons database
- const reasons = [
+// Reasons database
+const reasons = [
     { 
         text: "You’re the best part of my life — the kind I never knew I needed until you arrived.💖", 
         emoji: "🌟",
@@ -64,8 +64,8 @@ function displayNewReason() {
         const card = createReasonCard(reasons[currentReasonIndex]);
         reasonsContainer.appendChild(card);
         
-        // Update counter
-        reasonCounter.textContent = `Reason ${currentReasonIndex + 1} of ${reasons.length}`;
+        // Update counter (changed here)
+        reasonCounter.textContent = `Wish ${currentReasonIndex + 1} of ${reasons.length}`;
         
         currentReasonIndex++;
 
@@ -83,7 +83,7 @@ function displayNewReason() {
                             opacity: 0,
                             duration: 1,
                             onComplete: () => {
-                                window.location.href = 'last.html'; // Replace with the actual URL of the next page
+                                window.location.href = 'last.html';
                             }
                         });
                     });
@@ -98,9 +98,7 @@ function displayNewReason() {
             isTransitioning = false;
         }, 500);
     } else {
-        // Handle navigation to new page or section
         window.location.href = "#storylane";
-        // Or trigger your next page functionality
     }
 }
 
