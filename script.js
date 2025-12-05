@@ -9,7 +9,7 @@ document.addEventListener('mousemove', (e) => {
 
 // ---------------- Typing effect ----------------
 const greetingText =
-    "Hey Princess, you know what? You’re my favourite person in this whole world. 💖";
+    "Hey Princess… in a world full of people, you’re the one my heart chooses every single time. 💖";
 
 const greetingElement = document.querySelector('.greeting');
 let charIndex = 0;
